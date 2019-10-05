@@ -1,0 +1,28 @@
+name: "${project.artifactId}"
+main: "${project.groupId}.${project.artifactId}.${project.name}"
+version: "${project.version}"
+description: "${project.name} Purpur Plugin"
+author: "BillyGalbreath"
+api-version: "1.14"
+
+commands:
+  balance:
+    description: View balance
+    usage: /<command> (player)
+  economy:
+    description: Manage economy
+    usage: /<command>
+  pay:
+    description: Pay a player
+    usage: /<command> [player]
+
+permissions:
+  command.balance:
+    description: Allows viewing own balance
+    default: true
+  command.economy:
+    description: Allows managing economy
+    default: op
+  command.pay:
+    description: Allows paying other players
+    default: true
