@@ -36,7 +36,7 @@
         </repository>
     </repositories>
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.name}</finalName>
         <defaultGoal>clean package install</defaultGoal>
         <plugins>
             <plugin>
