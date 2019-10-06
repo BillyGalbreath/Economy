@@ -17,6 +17,10 @@ public class PlayerConfig extends YamlConfiguration {
         }
     }
 
+    public static boolean exists(OfflinePlayer player) {
+        return new File(new File(EconomyPlugin.getInstance().getDataFolder(), "userdata"), player.getUniqueId() + ".yml").exists();
+    }
+
     public static void unload(OfflinePlayer player) {
         synchronized (configs) {
             configs.remove(player);
@@ -34,8 +38,7 @@ public class PlayerConfig extends YamlConfiguration {
 
     private PlayerConfig(OfflinePlayer player) {
         super();
-        this.file = new File(EconomyPlugin.getInstance().getDataFolder(),
-                "userdata" + File.separator + player.getUniqueId() + ".yml");
+        this.file = new File(new File(EconomyPlugin.getInstance().getDataFolder(), "userdata"), player.getUniqueId() + ".yml");
         reload();
     }
 
@@ -55,5 +58,9 @@ public class PlayerConfig extends YamlConfiguration {
             } catch (Exception ignore) {
             }
         }
+    }
+
+    public double getBalance() {
+        return 0; // TODO
     }
 }

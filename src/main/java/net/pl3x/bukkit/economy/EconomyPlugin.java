@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class EconomyPlugin extends JavaPlugin {
     private static EconomyPlugin instance;
+    private static EconomyProvider provider;
 
     private VaultHook vaultHook;
 
@@ -23,7 +24,16 @@ public class EconomyPlugin extends JavaPlugin {
         Config.reload(this);
         Lang.reload(this);
 
-        vaultHook = new VaultHook(this);
+        if (!getServer().getPluginManager().isPluginEnabled("Vault")) {
+            getLogger().severe("Vault is a required dependency. Disabling " + getName());
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        provider = new EconomyProvider();
+
+        vaultHook = new VaultHook();
+        vaultHook.hook();
 
         getServer().getPluginManager().registerEvents(new BukkitListener(), this);
 
@@ -43,5 +53,9 @@ public class EconomyPlugin extends JavaPlugin {
 
     public static EconomyPlugin getInstance() {
         return instance;
+    }
+
+    public static EconomyProvider getProvider() {
+        return provider;
     }
 }

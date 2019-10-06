@@ -12,8 +12,14 @@ import java.util.logging.Level;
 public class Config {
     public static String LANGUAGE_FILE = "lang-en.yml";
 
+    public static String CURRENCY_NAME_PLURAL = "dollars";
+    public static String CURRENCY_NAME_SINGULAR = "dollar";
+
     private static void init() {
         LANGUAGE_FILE = getString("language-file", LANGUAGE_FILE);
+
+        CURRENCY_NAME_PLURAL = getString("currency.name.plural", CURRENCY_NAME_PLURAL);
+        CURRENCY_NAME_SINGULAR = getString("currency.name.singular", CURRENCY_NAME_SINGULAR);
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################
