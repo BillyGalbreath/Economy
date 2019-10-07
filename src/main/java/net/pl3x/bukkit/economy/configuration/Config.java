@@ -32,7 +32,6 @@ public class Config {
      * Reload the configuration file
      */
     public static void reload(Plugin plugin) {
-        plugin.saveDefaultConfig();
         File configFile = new File(plugin.getDataFolder(), "config.yml");
         config = new YamlConfiguration();
         try {

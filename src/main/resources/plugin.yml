@@ -1,5 +1,5 @@
-name: "${project.artifactId}"
-main: "${project.groupId}.${project.artifactId}.${project.name}"
+name: "${project.name}"
+main: "${project.groupId}.${project.artifactId}.${project.name}Plugin"
 version: "${project.version}"
 description: "${project.name} Purpur Plugin"
 author: "BillyGalbreath"
