@@ -35,11 +35,11 @@ public class EconomyPlugin extends JavaPlugin {
         vaultHook = new VaultHook();
         vaultHook.hook();
 
-        getServer().getPluginManager().registerEvents(new BukkitListener(), this);
+        getServer().getPluginManager().registerEvents(new BukkitListener(this), this);
 
         getCommand("economy").setExecutor(new CmdEconomy(this));
-        getCommand("balance").setExecutor(new CmdBalance(this));
-        getCommand("pay").setExecutor(new CmdPay(this));
+        getCommand("balance").setExecutor(new CmdBalance());
+        getCommand("pay").setExecutor(new CmdPay());
     }
 
     public void onDisable() {

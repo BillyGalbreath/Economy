@@ -32,16 +32,21 @@ public class CmdEconomy implements TabExecutor {
             return true;
         }
 
-        String response = "&d" + plugin.getName() + " v" + plugin.getDescription().getVersion();
+        if (args.length == 0) {
+            Lang.send(sender, "&d" + plugin.getName() + " v" + plugin.getDescription().getVersion());
+            return true;
+        }
 
-        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+        if (args[0].equalsIgnoreCase("reload")) {
             Config.reload(plugin);
             Lang.reload(plugin);
 
-            response += " reloaded";
+            Lang.send(sender, "&d" + plugin.getName() + " v" + plugin.getDescription().getVersion() + " reloaded");
+            return true;
         }
 
-        Lang.send(sender, response);
+        // TODO - more subcommands (give, take, set)
+
         return true;
     }
 }

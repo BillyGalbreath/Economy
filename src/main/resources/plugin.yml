@@ -9,9 +9,14 @@ commands:
   balance:
     description: View balance
     usage: /<command> (player)
+    aliases:
+      - bal
   economy:
     description: Manage economy
     usage: /<command>
+    aliases:
+      - eco
+      - econ
   pay:
     description: Pay a player
     usage: /<command> [player]
@@ -19,6 +24,9 @@ commands:
 permissions:
   command.balance:
     description: Allows viewing own balance
+    default: true
+  command.balance.others:
+    description: Allows viewing other player balances
     default: true
   command.economy:
     description: Allows managing economy

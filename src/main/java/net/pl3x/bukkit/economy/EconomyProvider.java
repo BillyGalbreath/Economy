@@ -4,7 +4,10 @@ import com.google.common.collect.ImmutableList;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import net.pl3x.bukkit.economy.configuration.Config;
+import net.pl3x.bukkit.economy.configuration.Lang;
 import net.pl3x.bukkit.economy.configuration.PlayerConfig;
+import net.pl3x.bukkit.economy.event.DepositEvent;
+import net.pl3x.bukkit.economy.event.WithdrawEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -243,16 +246,19 @@ public class EconomyProvider implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
         double balance = getBalance(player);
-        if (amount == 0) {
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
-        }
-        if (amount < 0) {
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "Cannot withdraw a negative amount");
+        if (amount <= 0) {
+            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, Lang.AMOUNT_MUST_BE_POSITIVE);
         }
         if (balance < amount) {
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "Not enough funds");
+            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, Lang.NOT_ENOUGH_FUNDS);
         }
-        return null; // TODO - withdraw from account
+        WithdrawEvent event = new WithdrawEvent(player, balance, amount);
+        if (!event.callEvent()) {
+            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, Lang.EVENT_WAS_CANCELLED);
+        }
+        PlayerConfig config = PlayerConfig.getConfig(player);
+        config.setBalance(event.getNewBalance());
+        return new EconomyResponse(amount, event.getNewBalance(), EconomyResponse.ResponseType.SUCCESS, "");
     }
 
     /**
@@ -298,13 +304,16 @@ public class EconomyProvider implements Economy {
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
         double balance = getBalance(player);
-        if (amount == 0) {
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.SUCCESS, "");
+        if (amount <= 0) {
+            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, Lang.AMOUNT_MUST_BE_POSITIVE);
         }
-        if (amount < 0) {
-            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, "Cannot deposit a negative amount");
+        DepositEvent event = new DepositEvent(player, balance, amount);
+        if (!event.callEvent()) {
+            return new EconomyResponse(amount, balance, EconomyResponse.ResponseType.FAILURE, Lang.EVENT_WAS_CANCELLED);
         }
-        return null; // TODO - deposit into account
+        PlayerConfig config = PlayerConfig.getConfig(player);
+        config.setBalance(event.getNewBalance());
+        return new EconomyResponse(amount, event.getNewBalance(), EconomyResponse.ResponseType.SUCCESS, "");
     }
 
     /**
@@ -491,7 +500,13 @@ public class EconomyProvider implements Economy {
         if (hasAccount(player)) {
             return false; // account already exists
         }
-        return true; // TODO - create account with default starting amount
+        PlayerConfig config = PlayerConfig.getConfig(player);
+        config.setBalance(Config.STARTING_AMOUNT);
+        if (player.isOnline()) {
+            Lang.send(player.getPlayer(), Lang.STARTING_AMOUNT_GIVEN
+                    .replace("{amount}", format(Config.STARTING_AMOUNT)));
+        }
+        return true;
     }
 
     /**

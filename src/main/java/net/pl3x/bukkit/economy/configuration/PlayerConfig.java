@@ -61,6 +61,11 @@ public class PlayerConfig extends YamlConfiguration {
     }
 
     public double getBalance() {
-        return 0; // TODO
+        return getDouble("balance", 0D);
+    }
+
+    public void setBalance(double amount) {
+        set("balance", amount);
+        save();
     }
 }

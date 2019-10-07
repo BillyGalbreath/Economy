@@ -16,9 +16,43 @@ public class Lang {
     public static String COMMAND_NO_PERMISSION = "&4You do not have permission for that command!";
     public static String PLAYER_COMMAND = "&4This command is only available to players!";
 
+    public static String EVENT_WAS_CANCELLED = "&4Event was cancelled";
+
+    public static String MUST_SPECIFY_PLAYER = "&4Must specify a player";
+    public static String PLAYER_HAS_NO_ACCOUNT = "&4Player has no account";
+
+    public static String MUST_SPECIFY_AMOUNT = "&4Must specify an amount";
+    public static String INVALID_AMOUNT = "&4Invalid amount specified";
+    public static String AMOUNT_MUST_BE_POSITIVE = "&4Amount must be positive";
+
+    public static String NOT_ENOUGH_FUNDS = "&4Not enough funds";
+
+    public static String STARTING_AMOUNT_GIVEN = "&dYou have been given {amount} as a starting /balance";
+
+    public static String PLAYER_BALANCE = "&d{player} Balance: {balance}";
+
+    public static String PAID_PLAYER = "&dYou have paid {player} {amount}";
+
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", COMMAND_NO_PERMISSION);
         PLAYER_COMMAND = getString("player-command", PLAYER_COMMAND);
+
+        EVENT_WAS_CANCELLED = getString("event-was-cancelled", EVENT_WAS_CANCELLED);
+
+        MUST_SPECIFY_PLAYER = getString("must-specify-player", MUST_SPECIFY_PLAYER);
+        PLAYER_HAS_NO_ACCOUNT = getString("player-has-no-account", PLAYER_HAS_NO_ACCOUNT);
+
+        MUST_SPECIFY_AMOUNT = getString("must-specify-amount", MUST_SPECIFY_AMOUNT);
+        INVALID_AMOUNT = getString("invalid-amount", INVALID_AMOUNT);
+        AMOUNT_MUST_BE_POSITIVE = getString("amount-must-be-positive", AMOUNT_MUST_BE_POSITIVE);
+
+        NOT_ENOUGH_FUNDS = getString("not-enough-funds", NOT_ENOUGH_FUNDS);
+
+        STARTING_AMOUNT_GIVEN = getString("starting-amount-given", STARTING_AMOUNT_GIVEN);
+
+        PLAYER_BALANCE = getString("player-balance", PLAYER_BALANCE);
+
+        PAID_PLAYER = getString("paid-player", PAID_PLAYER);
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################
